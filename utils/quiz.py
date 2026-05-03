@@ -18,5 +18,12 @@ quiz_data = {
             "options": ["Central Processing Unit", "Computer Power Unit", "Control Unit"],
             "answer": "Central Processing Unit"
         }
-    ]
+    ],
+    "Internet Basics": [
+    {
+        "question": "Internet kya hai?",
+        "options": ["Network", "Device", "Software"],
+        "answer": "Network"
+    }
+]
 }

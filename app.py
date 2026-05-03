@@ -3,6 +3,7 @@ import streamlit as st
 from utils.db import create_table, complete_chapter, get_progress
 from utils.xp import calculate_xp, get_level
 from utils.chapters import chapters
+from utils.content import content
 
 from utils.auth import create_user_table, register, login
 from utils.quiz import quiz_data
@@ -61,7 +62,7 @@ create_streak_table()
 # ---------------- SESSION ----------------
 if "user" not in st.session_state:
     st.session_state.user = None
-
+st.write(content.get(ch["name"], "Content coming soon..."))
 # ---------------- LOGIN ----------------
 if not st.session_state.user:
     st.title("🔐 Login / Register")
