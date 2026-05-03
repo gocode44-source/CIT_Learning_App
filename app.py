@@ -62,7 +62,7 @@ create_streak_table()
 # ---------------- SESSION ----------------
 if "user" not in st.session_state:
     st.session_state.user = None
-st.write(content.get(ch["name"], "Content coming soon..."))
+
 # ---------------- LOGIN ----------------
 if not st.session_state.user:
     st.title("🔐 Login / Register")
@@ -139,19 +139,28 @@ else:
 
         show_progress_chart(user)
 
+   
     # ---------------- CHAPTERS ----------------
     elif page == "Chapters":
         st.markdown("## 📚 Chapters")
 
         completed = [row[2] for row in data]
 
-        for ch in chapters:
-            if ch["name"] in completed:
-                st.success(f"{ch['name']} ✅")
-            else:
-                if st.button(f"Complete {ch['name']}"):
-                    complete_chapter(user, ch["name"], ch["xp"])
-                    st.rerun()
+    for ch in chapters:
+
+        # 👇 Chapter Title
+        st.subheader(ch["name"])
+
+        # 👇 YEH LINE YAHAN ADD KARO (CONTENT SHOW)
+        st.write(content.get(ch["name"], "Content coming soon..."))
+
+        # 👇 Status / Button
+        if ch["name"] in completed:
+            st.success("✅ Completed")
+        else:
+            if st.button(f"Complete {ch['name']}", key=ch["name"]):
+                complete_chapter(user, ch["name"], ch["xp"])
+                st.rerun()
 
     # ---------------- QUIZ ----------------
     elif page == "Quiz":
