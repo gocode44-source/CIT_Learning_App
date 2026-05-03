@@ -39,6 +39,23 @@ body {background-color: #0f172a;}
     box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
 }
 
+/* 🔥 Animated Badge */
+.badge {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 20px;
+    font-size: 18px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: white;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #6366f1; }
+    to { box-shadow: 0 0 25px #8b5cf6; }
+}
+
 .stButton>button {
     background: linear-gradient(90deg, #6366f1, #8b5cf6);
     color: white;
@@ -141,20 +158,22 @@ else:
 
         show_progress_chart(user)
 
-      # ---------------- BADGES ----------------
-      st.markdown("### 🏆 Your Badges")
+        # ---------------- 🏆 ANIMATED BADGES ----------------
+        st.markdown("### 🏆 Your Badges")
 
-      completed_count = len(data)
-      total_chapters = len(chapters)
+        completed_count = len(data)
+        total_chapters = len(chapters)
 
-     badges = get_badges(completed_count, total_chapters)
+        badges = get_badges(completed_count, total_chapters)
 
-     if badges:
-      for b in badges:
-        st.success(b)
-    else:
-      st.info("Complete chapters to earn badges!")
+        if badges:
+            badge_html = ""
+            for b in badges:
+                badge_html += f'<div class="badge">{b}</div>'
 
+            st.markdown(badge_html, unsafe_allow_html=True)
+        else:
+            st.info("Complete chapters to earn badges!")
 
     # ---------------- CHAPTERS ----------------
     elif page == "Chapters":
