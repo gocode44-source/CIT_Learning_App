@@ -1,9 +1,10 @@
-from utils.content import content
 import streamlit as st
 
+# ---------------- IMPORTS ----------------
 from utils.db import create_table, complete_chapter, get_progress
 from utils.xp import calculate_xp, get_level
 from utils.chapters import chapters
+from utils.content import content
 
 from utils.auth import create_user_table, register, login
 from utils.quiz import quiz_data
@@ -13,7 +14,7 @@ from utils.graphs import show_progress_chart
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="CIT PRO App", layout="wide")
 
-# ---------------- MODERN HEADER ----------------
+# ---------------- HEADER ----------------
 st.markdown("""
 <h1 style='text-align:center;
 background: linear-gradient(90deg,#6366f1,#8b5cf6);
@@ -23,7 +24,7 @@ color: transparent;'>
 </h1>
 """, unsafe_allow_html=True)
 
-# ---------------- MODERN UI CSS ----------------
+# ---------------- CSS ----------------
 st.markdown("""
 <style>
 body {background-color: #0f172a;}
@@ -54,7 +55,7 @@ h1, h2, h3 {color: white;}
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- DATABASE SETUP ----------------
+# ---------------- DATABASE ----------------
 create_table()
 create_user_table()
 create_streak_table()
@@ -139,28 +140,22 @@ else:
 
         show_progress_chart(user)
 
-   
     # ---------------- CHAPTERS ----------------
     elif page == "Chapters":
         st.markdown("## 📚 Chapters")
 
         completed = [row[2] for row in data]
 
-    for ch in chapters:
+        for ch in chapters:
+            st.subheader(ch["name"])
+            st.write(content.get(ch["name"], "Content coming soon..."))
 
-        # 👇 Chapter Title
-        st.subheader(ch["name"])
-
-        # 👇 YEH LINE YAHAN ADD KARO (CONTENT SHOW)
-        st.write(content.get(ch["name"], "Content coming soon..."))
-
-        # 👇 Status / Button
-        if ch["name"] in completed:
-            st.success("✅ Completed")
-        else:
-            if st.button(f"Complete {ch['name']}", key=ch["name"]):
-                complete_chapter(user, ch["name"], ch["xp"])
-                st.rerun()
+            if ch["name"] in completed:
+                st.success("✅ Completed")
+            else:
+                if st.button(f"Complete {ch['name']}", key=ch["name"]):
+                    complete_chapter(user, ch["name"], ch["xp"])
+                    st.rerun()
 
     # ---------------- QUIZ ----------------
     elif page == "Quiz":
