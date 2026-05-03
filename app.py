@@ -1,9 +1,9 @@
+from utils.content import content
 import streamlit as st
 
 from utils.db import create_table, complete_chapter, get_progress
 from utils.xp import calculate_xp, get_level
 from utils.chapters import chapters
-from utils.content import content
 
 from utils.auth import create_user_table, register, login
 from utils.quiz import quiz_data
