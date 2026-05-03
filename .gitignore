@@ -1,0 +1,3 @@
+data/progress.db
+__pycache__/
+*.pyc
