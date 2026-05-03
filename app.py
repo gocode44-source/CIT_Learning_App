@@ -10,6 +10,7 @@ from utils.auth import create_user_table, register, login
 from utils.quiz import quiz_data
 from utils.streak import create_streak_table, update_streak, get_streak
 from utils.graphs import show_progress_chart
+from utils.badges import get_badges
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="CIT PRO App", layout="wide")
@@ -139,6 +140,21 @@ else:
         st.progress(min(xp / 500, 1.0))
 
         show_progress_chart(user)
+
+      # ---------------- BADGES ----------------
+      st.markdown("### 🏆 Your Badges")
+
+      completed_count = len(data)
+      total_chapters = len(chapters)
+
+     badges = get_badges(completed_count, total_chapters)
+
+     if badges:
+      for b in badges:
+        st.success(b)
+    else:
+      st.info("Complete chapters to earn badges!")
+
 
     # ---------------- CHAPTERS ----------------
     elif page == "Chapters":
